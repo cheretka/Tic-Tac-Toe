@@ -1,10 +1,6 @@
-import random
-
-
 class Board:
     def __init__(self):
         self.values = [' ' for x in range(9)]
-        # self.player_pos = {'X': [], 'O': []}
 
     def print(self):
         print("\n")
