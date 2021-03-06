@@ -36,15 +36,6 @@ class Board:
         return False
 
 
-    # def set_value(self, player, position):
-    #     # if self.values[position - 1] == ' ':
-    #     #     self.player_pos[player].append(position)
-    #
-    #     self.values[position - 1] = player
-    #
-    #     return True
-
-
     def is_full(self):
         for y in self.values:
             if y == " ":
