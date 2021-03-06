@@ -4,7 +4,7 @@ import random
 class Board:
     def __init__(self):
         self.values = [' ' for x in range(9)]
-        self.player_pos = {'X': [], 'O': []}
+        # self.player_pos = {'X': [], 'O': []}
 
     def print(self):
         print("\n")
@@ -20,26 +20,30 @@ class Board:
         print("\t          |     |")
         print("\n")
 
-    def get_board(self):
-        return self.values
 
     def check_win(self, cur_player):
         soln = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
 
         for x in soln:
-            if all(y in self.player_pos[cur_player] for y in x):
+            counter = 0
+            for ind in x:
+                if self.values[ind - 1] == cur_player:
+                    counter += 1
+            if counter == 3:
+
                 return True
 
-
         return False
 
-    def set_value(self, player, position):
-        if self.values[position - 1] == ' ':
-            self.values[position - 1] = player
-            self.player_pos[player].append(position)
-            return True
 
-        return False
+    # def set_value(self, player, position):
+    #     # if self.values[position - 1] == ' ':
+    #     #     self.player_pos[player].append(position)
+    #
+    #     self.values[position - 1] = player
+    #
+    #     return True
+
 
     def is_full(self):
         for y in self.values:
@@ -67,7 +71,11 @@ def move_player(playerLetter, board):
     while ok == False:
         print("Which box? : ")
         move = int(input())
-        ok = board.set_value(playerLetter, (3 * (move // 10 - 1) + (move % 10)))
+        # ok = board.set_value(playerLetter, (3 * (move // 10 - 1) + (move % 10)))
+        index = (3 * (move // 10 - 1) + (move % 10)) -1
+        if board.values[index] == ' ':
+            board.values[index] = playerLetter
+            ok=True
 
 
 def move_computer(board, letterAI, letterH):
@@ -75,14 +83,17 @@ def move_computer(board, letterAI, letterH):
     move = -1
     for x in range(9):
         if board.values[x] == ' ':
-            board.set_value(letterAI, x+1)
-            score = minimax(board, "max", letterAI, letterH)
-            board.set_value(" ", x + 1)
+
+            board.values[x] = letterAI
+            score = minimax(board, "min", letterAI, letterH)
+            board.values[x] = ' '
+
             if score>bestScore:
                 bestScore = score
-                move = x+1
+                move = x
 
-    board.set_value(letterAI, move)
+    board.values[move] = letterAI
+
 
 
 def minimax(board, max_min, letterAI, letterH):
@@ -97,19 +108,19 @@ def minimax(board, max_min, letterAI, letterH):
         bestScore = -10
         for x in range(9):
             if board.values[x] == ' ':
-                board.set_value(letterAI, x + 1)
+                board.values[x] = letterAI
                 score = minimax(board, "min", letterAI, letterH)
-                board.set_value(" ", x + 1)
+                board.values[x] = ' '
                 bestScore = max(bestScore, score)
         return bestScore
     else:
-        bestScore = -10
+        bestScore = 10
         for x in range(9):
             if board.values[x] == ' ':
-                board.set_value(letterH, x + 1)
+                board.values[x] = letterH
                 score = minimax(board, "max", letterAI, letterH)
-                board.set_value(" ", x + 1)
-                bestScore = max(bestScore, score)
+                board.values[x] = ' '
+                bestScore = min(bestScore, score)
         return bestScore
 
 
@@ -132,11 +143,14 @@ if __name__ == "__main__":
     for x in range(9):
 
         if cur_player[x % 2] == playerLetter:
+            print('Your turn')
             move_player(playerLetter, board)
         else:
+            print('AI turn')
             move_computer(board, cur_player[x % 2], playerLetter)
 
         board.print()
+
         if board.check_win(cur_player[x % 2]):
             if cur_player[x % 2] == playerLetter:
                 print('Hooray! You have won the game!')
