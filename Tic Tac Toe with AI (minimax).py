@@ -41,6 +41,13 @@ class Board:
 
         return False
 
+    def is_full(self):
+        for y in self.values:
+            if y == " ":
+                return False
+
+        return True
+
 
 
 
@@ -63,13 +70,48 @@ def move_player(playerLetter, board):
         ok = board.set_value(playerLetter, (3 * (move // 10 - 1) + (move % 10)))
 
 
-def move_computer(letter, board):
-    possibleMoves = []
+def move_computer(board, letterAI, letterH):
+    bestScore = -10
+    move = -1
     for x in range(9):
         if board.values[x] == ' ':
-            possibleMoves.append(x)
+            board.set_value(letterAI, x+1)
+            score = minimax(board, "max", letterAI, letterH)
+            board.set_value(" ", x + 1)
+            if score>bestScore:
+                bestScore = score
+                move = x+1
 
-    ok = board.set_value(letter, random.choice(possibleMoves)+1)
+    board.set_value(letterAI, move)
+
+
+def minimax(board, max_min, letterAI, letterH):
+    if board.check_win(letterAI):
+        return 1
+    if board.check_win(letterH):
+        return -1
+    if board.is_full():
+        return 0
+
+    if max_min == "max":
+        bestScore = -10
+        for x in range(9):
+            if board.values[x] == ' ':
+                board.set_value(letterAI, x + 1)
+                score = minimax(board, "min", letterAI, letterH)
+                board.set_value(" ", x + 1)
+                bestScore = max(bestScore, score)
+        return bestScore
+    else:
+        bestScore = -10
+        for x in range(9):
+            if board.values[x] == ' ':
+                board.set_value(letterH, x + 1)
+                score = minimax(board, "max", letterAI, letterH)
+                board.set_value(" ", x + 1)
+                bestScore = max(bestScore, score)
+        return bestScore
+
 
 
 
@@ -92,7 +134,7 @@ if __name__ == "__main__":
         if cur_player[x % 2] == playerLetter:
             move_player(playerLetter, board)
         else:
-            move_computer(cur_player[x % 2], board)
+            move_computer(board, cur_player[x % 2], playerLetter)
 
         board.print()
         if board.check_win(cur_player[x % 2]):
