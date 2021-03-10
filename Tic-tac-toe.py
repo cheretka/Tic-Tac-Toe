@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     human_letter = ''
     while not (human_letter == 'X' or human_letter == 'O'):
-        print('Do you want to be X (moves first) or O?')
+        print('Do you want to be \'X\' (moves first) or \'O\' ?')
         human_letter = input().upper()
 
     AI_letter = 'O' if human_letter == 'X' else 'X'
