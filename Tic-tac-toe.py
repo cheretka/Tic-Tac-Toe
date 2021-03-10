@@ -1,7 +1,7 @@
 from Board import *
 from Minimax_algorithm import *
 
-
+# Function that takes a move from the user
 def move_player(board, human_letter):
     print('Your turn')
     good_move = False
@@ -11,11 +11,12 @@ def move_player(board, human_letter):
         index = [(3 * (move // 10 - 1) + (move % 10)) - 1, human_letter]
         good_move = board.make_move(index)
 
-
+# Function that selects and takes a step for the bot
 def move_computer(board, AI_letter):
     print('AI turn')
     best_score, final_move = -10, -1
 
+    # start Minimax algorithm
     possible_moves = board.get_possible_moves()
     for move in possible_moves:
         board.make_move(move)
@@ -34,6 +35,7 @@ if __name__ == "__main__":
     board = Board()
     board.print()
 
+    # determination for which mark the person and AI will play
     human_letter = ''
     while not (human_letter == 'X' or human_letter == 'O'):
         print('Do you want to be \'X\' (moves first) or \'O\' ?')
@@ -43,15 +45,19 @@ if __name__ == "__main__":
     current_player = ['X', 'O']
 
 
+    # game
     index = 0
     while True:
+        # player's move
         if current_player[index % 2] == human_letter:
             move_player(board, human_letter)
         else:
             move_computer(board, current_player[index % 2])
 
+        # show board
         board.print()
 
+        # checking if the game is over
         win = board.check_win()
         if (win == -1 and human_letter == 'O') or (win == 1 and human_letter == 'X'):
             print('Hooray! You have won the game!')
