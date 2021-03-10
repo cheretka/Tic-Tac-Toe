@@ -1,53 +1,11 @@
-class Board:
-    def __init__(self):
-        self.values = [' ' for x in range(9)]
-
-    def print(self):
-        print("\n")
-        print("\t      1      2     3")
-        print("\t          |     |")
-        print("\t 1     {}  |  {}  |  {}".format(self.values[0], self.values[1], self.values[2]))
-        print('	    ______|_____|_____')
-        print("\t          |     |")
-        print("\t 2     {}  |  {}  |  {}".format(self.values[3], self.values[4], self.values[5]))
-        print('	    ______|_____|_____')
-        print("\t          |     |")
-        print("\t 3     {}  |  {}  |  {}".format(self.values[6], self.values[7], self.values[8]))
-        print("\t          |     |")
-        print("\n")
+from Board import Board
 
 
-    def check_win(self, cur_player):
-        soln = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
-
-        for x in soln:
-            counter = 0
-            for ind in x:
-                if self.values[ind - 1] == cur_player:
-                    counter += 1
-            if counter == 3:
-
-                return True
-
-        return False
-
-
-    def is_full(self):
-        for y in self.values:
-            if y == " ":
-                return False
-
-        return True
-
-
-
-
-
-def input_player():
+def get_player_letter():
     letter = ''
 
     while not (letter == 'X' or letter == 'O'):
-        print('Do you want to be X or O?')
+        print('Do you want to be X (moves first) or O?')
         letter = input().upper()
 
     return letter
@@ -55,60 +13,46 @@ def input_player():
 
 def move_player(playerLetter, board):
     ok = False
-    while ok == False:
+    while not ok:
         print("Which box? : ")
         move = int(input())
-        # ok = board.set_value(playerLetter, (3 * (move // 10 - 1) + (move % 10)))
-        index = (3 * (move // 10 - 1) + (move % 10)) -1
-        if board.values[index] == ' ':
-            board.values[index] = playerLetter
-            ok=True
+        index = [(3 * (move // 10 - 1) + (move % 10)) - 1, playerLetter]
+        ok = board.make_move(index)
 
 
-def move_computer(board, letterAI, letterH):
+def move_computer(board, letterAI):
     bestScore = -10
-    move = -1
-    for x in range(9):
-        if board.values[x] == ' ':
+    final_move = -1
 
-            board.values[x] = letterAI
-            score = minimax(board, "min", letterAI, letterH)
-            board.values[x] = ' '
+    possible_moves = board.get_possible_moves()
+    for move in possible_moves:
+        board.make_move(move)
+        score = minimax(board, -1, letterAI)
+        board.undo_move()
+        if score > bestScore:
+            bestScore = score
+            final_move = move
 
-            if score>bestScore:
-                bestScore = score
-                move = x
-
-    board.values[move] = letterAI
-
+    board.make_move(final_move)
 
 
-def minimax(board, max_min, letterAI, letterH):
-    if board.check_win(letterAI):
-        return 1
-    if board.check_win(letterH):
-        return -1
-    if board.is_full():
-        return 0
+def minimax(board, max_min, letterAI):
+    win = board.check_win()
+    if win != 2:
+        return win if letterAI == 'X' else -win
 
-    if max_min == "max":
-        bestScore = -10
-        for x in range(9):
-            if board.values[x] == ' ':
-                board.values[x] = letterAI
-                score = minimax(board, "min", letterAI, letterH)
-                board.values[x] = ' '
-                bestScore = max(bestScore, score)
-        return bestScore
-    else:
-        bestScore = 10
-        for x in range(9):
-            if board.values[x] == ' ':
-                board.values[x] = letterH
-                score = minimax(board, "max", letterAI, letterH)
-                board.values[x] = ' '
-                bestScore = min(bestScore, score)
-        return bestScore
+    scores = []
+    possible_moves = board.get_possible_moves()
+
+    for move in possible_moves:
+        board.make_move(move)
+
+        score = minimax(board, -max_min, letterAI)
+        scores.append(score)
+        board.undo_move()
+
+    return min(scores) if max_min == -1 else max(scores)
+
 
 
 
@@ -118,32 +62,35 @@ def minimax(board, max_min, letterAI, letterH):
 if __name__ == "__main__":
 
     print('Welcome to Tic Tac Toe!')
-
-    values1 = [' ' for x in range(9)]
-
     board = Board()
     board.print()
 
-    playerLetter = input_player()
+    playerLetter = get_player_letter()
+    AILetter = 'O' if playerLetter == 'X' else 'X'
     cur_player = ['X', 'O']
 
-    for x in range(9):
+    x = 0
+    while True:
 
         if cur_player[x % 2] == playerLetter:
             print('Your turn')
             move_player(playerLetter, board)
         else:
             print('AI turn')
-            move_computer(board, cur_player[x % 2], playerLetter)
+            move_computer(board, cur_player[x % 2])
 
         board.print()
 
-        if board.check_win(cur_player[x % 2]):
-            if cur_player[x % 2] == playerLetter:
-                print('Hooray! You have won the game!')
-                raise SystemExit(0)
-            else:
-                print('The computer has beaten you! You lose.')
-                raise SystemExit(0)
+        win = board.check_win()
 
-    print('The game is a tie!')
+        if (win == -1 and playerLetter == 'O') or (win == 1 and playerLetter == 'X'):
+            print('Hooray! You have won the game!')
+            break
+        elif (win == -1 and AILetter == 'O') or (win == 1 and AILetter == 'X'):
+            print('The computer has beaten you! You lose.')
+            break
+        elif win == 0:
+            print('The game is a tie!')
+            break
+
+        x += 1
