@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="735ed43d-a0ec-41ee-8c0f-735c5c60a9a6" name="Default Changelist" comment="clean code">
-      <change afterPath="$PROJECT_DIR$/Board.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/English Draughts with AI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tic Tac Toe with AI (minimax).py" beforeDir="false" afterPath="$PROJECT_DIR$/Tic Tac Toe with AI (minimax).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tic Tac Toe with AI (random).py" beforeDir="false" afterPath="$PROJECT_DIR$/Tic Tac Toe with AI (random).py" afterDir="false" />
-    </list>
+    <list default="true" id="735ed43d-a0ec-41ee-8c0f-735c5c60a9a6" name="Default Changelist" comment="rewrite code" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615052309315</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="rewrite code">
+      <created>1615398782772</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1615398782772</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -150,7 +152,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -159,6 +167,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="clean code" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean code" />
+    <MESSAGE value="rewrite code" />
+    <option name="LAST_COMMIT_MESSAGE" value="rewrite code" />
   </component>
 </project>
