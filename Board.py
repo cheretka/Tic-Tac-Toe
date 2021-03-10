@@ -51,7 +51,6 @@ class Board:
         return 0
 
     def get_possible_moves(self):
-
         player = self.current_player
 
         list = []
