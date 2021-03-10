@@ -1,17 +1,9 @@
 from Board import Board
 
 
-def get_player_letter():
-    letter = ''
-
-    while not (letter == 'X' or letter == 'O'):
-        print('Do you want to be X (moves first) or O?')
-        letter = input().upper()
-
-    return letter
-
 
 def move_player(playerLetter, board):
+    print('Your turn')
     ok = False
     while not ok:
         print("Which box? : ")
@@ -21,7 +13,8 @@ def move_player(playerLetter, board):
 
 
 def move_computer(board, letterAI):
-    bestScore = -10
+    print('AI turn')
+    best_score = -10
     final_move = -1
 
     possible_moves = board.get_possible_moves()
@@ -29,8 +22,8 @@ def move_computer(board, letterAI):
         board.make_move(move)
         score = minimax(board, -1, letterAI)
         board.undo_move()
-        if score > bestScore:
-            bestScore = score
+        if score > best_score:
+            best_score = score
             final_move = move
 
     board.make_move(final_move)
@@ -46,7 +39,6 @@ def minimax(board, max_min, letterAI):
 
     for move in possible_moves:
         board.make_move(move)
-
         score = minimax(board, -max_min, letterAI)
         scores.append(score)
         board.undo_move()
@@ -65,24 +57,25 @@ if __name__ == "__main__":
     board = Board()
     board.print()
 
-    playerLetter = get_player_letter()
-    AILetter = 'O' if playerLetter == 'X' else 'X'
-    cur_player = ['X', 'O']
+    human_letter = ''
+    while not (human_letter == 'X' or human_letter == 'O'):
+        print('Do you want to be X (moves first) or O?')
+        human_letter = input().upper()
 
-    x = 0
+    AI_letter = 'O' if human_letter == 'X' else 'X'
+    current_player = ['X', 'O']
+
+
+    index = 0
     while True:
-
-        if cur_player[x % 2] == playerLetter:
-            print('Your turn')
+        if current_player[index % 2] == human_letter:
             move_player(playerLetter, board)
         else:
-            print('AI turn')
-            move_computer(board, cur_player[x % 2])
+            move_computer(board, current_player[index % 2])
 
         board.print()
 
         win = board.check_win()
-
         if (win == -1 and playerLetter == 'O') or (win == 1 and playerLetter == 'X'):
             print('Hooray! You have won the game!')
             break
@@ -93,4 +86,6 @@ if __name__ == "__main__":
             print('The game is a tie!')
             break
 
-        x += 1
+        index += 1
+
+    print('End the game!')
