@@ -6,7 +6,7 @@ def move_player(board, human_letter):
     print('Your turn')
     good_move = False
     while not good_move:
-        print("Which box? : ")
+        print("Which box (RowColumn)? : ")
         move = int(input())
         index = [(3 * (move // 10 - 1) + (move % 10)) - 1, human_letter]
         good_move = board.make_move(index)

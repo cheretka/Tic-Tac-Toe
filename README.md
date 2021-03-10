@@ -1,7 +1,9 @@
 # Tic-Tac-Toe
 Minimax Algorithm in Game Theory | Tic-Tac-Toe AI – Finding optimal move
 
-Tic-Tac-Toe with AI (Artificial Intelligence) that plays a perfect game. This AI will consider all possible scenarios and makes the most optimal move.
+Min-max is a decision-making algorithm which uses decision theory, game theory, statistics and 
+philosophy to calculate the optimal move. The mechanism evaluates minimum lose and maximum profit. 
+This logic can also be extended to play more complicated game like chess, checkers etc.
 ## Usage
 
 ```python
@@ -38,19 +40,83 @@ AI turn
 
 
 Your turn
-Which box? : 
+Which box (RowColumn)? : 
+13
+
+
+	      1      2     3
+	          |     |
+	 1     X  |     |  O
+	    ______|_____|_____
+	          |     |
+	 2        |     |   
+	    ______|_____|_____
+	          |     |
+	 3        |     |   
+	          |     |
+
+
+AI turn
+
+
+	      1      2     3
+	          |     |
+	 1     X  |     |  O
+	    ______|_____|_____
+	          |     |
+	 2     X  |     |   
+	    ______|_____|_____
+	          |     |
+	 3        |     |   
+	          |     |
+
+
+Your turn
+Which box (RowColumn)? : 
+31
+
+
+	      1      2     3
+	          |     |
+	 1     X  |     |  O
+	    ______|_____|_____
+	          |     |
+	 2     X  |     |   
+	    ______|_____|_____
+	          |     |
+	 3     O  |     |   
+	          |     |
+
+
+AI turn
+
+
+	      1      2     3
+	          |     |
+	 1     X  |     |  O
+	    ______|_____|_____
+	          |     |
+	 2     X  |  X  |   
+	    ______|_____|_____
+	          |     |
+	 3     O  |     |   
+	          |     |
+
+
+Your turn
+Which box (RowColumn)? : 
 33
 
 
 	      1      2     3
 	          |     |
-	 1     X  |     |   
+	 1     X  |     |  O
 	    ______|_____|_____
 	          |     |
-	 2        |     |   
+	 2     X  |  X  |   
 	    ______|_____|_____
 	          |     |
-	 3        |     |  O
+	 3     O  |     |  O
 	          |     |
 
 
@@ -59,80 +125,17 @@ AI turn
 
 	      1      2     3
 	          |     |
-	 1     X  |     |  X
+	 1     X  |     |  O
 	    ______|_____|_____
 	          |     |
-	 2        |     |   
+	 2     X  |  X  |  X
 	    ______|_____|_____
 	          |     |
-	 3        |     |  O
-	          |     |
-
-
-Your turn
-Which box? : 
-12
-
-
-	      1      2     3
-	          |     |
-	 1     X  |  O  |  X
-	    ______|_____|_____
-	          |     |
-	 2        |     |   
-	    ______|_____|_____
-	          |     |
-	 3        |     |  O
-	          |     |
-
-
-AI turn
-
-
-	      1      2     3
-	          |     |
-	 1     X  |  O  |  X
-	    ______|_____|_____
-	          |     |
-	 2        |     |   
-	    ______|_____|_____
-	          |     |
-	 3     X  |     |  O
-	          |     |
-
-
-Your turn
-Which box? : 
-22
-
-
-	      1      2     3
-	          |     |
-	 1     X  |  O  |  X
-	    ______|_____|_____
-	          |     |
-	 2        |  O  |   
-	    ______|_____|_____
-	          |     |
-	 3     X  |     |  O
-	          |     |
-
-
-AI turn
-
-
-	      1      2     3
-	          |     |
-	 1     X  |  O  |  X
-	    ______|_____|_____
-	          |     |
-	 2     X  |  O  |   
-	    ______|_____|_____
-	          |     |
-	 3     X  |     |  O
+	 3     O  |     |  O
 	          |     |
 
 
 The computer has beaten you! You lose.
 End the game!
+
 ```
