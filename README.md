@@ -7,7 +7,7 @@ philosophy to calculate the optimal move. The mechanism evaluates minimum lose a
 This logic can also be extended to play more complicated game like chess, checkers etc.
 
 
-##How does it works?
+## How does it works?
 
 Pseudocode for Minimax Algorithm:
 
