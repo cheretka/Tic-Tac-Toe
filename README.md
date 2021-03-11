@@ -9,7 +9,7 @@ This logic can also be extended to play more complicated game like chess, checke
 
 ##How does it works?
 
-Pseudocode (adapted):
+Pseudocode for Minimax Algorithm:
 
 ``` 
 minimax( max_min_type):
